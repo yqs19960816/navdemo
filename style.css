@@ -1,0 +1,94 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+}
+
+body {
+    background: #DAD9DA url(./wall.jpg) no-repeat center center;
+    background-size: cover;
+    height: 100vh;
+}
+
+kbd {
+    border: 1px solid red;
+    width: 4em;
+    height: 4em;
+    display: inline-block;
+    text-transform: uppercase;
+    position: relative;
+}
+
+kbd>button {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    display: none;
+}
+
+kbd:hover>button {
+    display: inline;
+}
+
+main {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#mian {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+}
+
+#mian>div:nth-child(2) {
+    margin-left: -10px;
+}
+
+#mian>div:nth-child(3) {
+    margin-left: -90px;
+}
+
+.key {
+    width: 50px;
+    height: 40px;
+    background: #010001;
+    border: 1px solid #373737;
+    color: #FFFFFF;
+    border-radius: 5px;
+    box-shadow: 0 0 0px 2px #1A1B1C, 0 0 0px 2px #1F2020, 0 3px 0px 2px #080808, 0 0px 13px 0 #000000;
+    font-size: 16px;
+    font-weight: 400;
+    font-family: Helvetica;
+    position: relative;
+}
+
+.row {
+    margin: 13px;
+}
+
+.row>.key {
+    margin: 0 8px;
+}
+
+.key>img {
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    left: 5px;
+    bottom: 2px;
+    border-radius: 2px;
+}
+
+.key>.text {
+    position: absolute;
+    left: 4px;
+    top: 1px;
+}

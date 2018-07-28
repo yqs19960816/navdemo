@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>我的导航网站</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header></header>
+    <main>
+        <div class="wrapper" id="mian"></div>
+    </main>
+    <footer></footer>
+    <script>
+        //1.初始化数据
+        var initA = init();
+        var keys = initA['keys'];
+        var hash = initA['hash'];
+        //2.遍历数据生成键盘
+        generateKeyboard(keys, hash);
+        //3.监听全局键盘事件
+        listenToUser(hash);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        function init() {
+            //数组里面有数组，数组即对象
+            var keys = {
+                0: {
+                    0: 'q',
+                    1: 'w',
+                    2: 'e',
+                    3: 'r',
+                    4: 't',
+                    5: 'y',
+                    6: 'u',
+                    7: 'i',
+                    8: 'o',
+                    9: 'p',
+                    'length': 10
+                },
+                1: {
+                    0: 'a',
+                    1: 's',
+                    2: 'd',
+                    3: 'f',
+                    4: 'g',
+                    5: 'h',
+                    6: 'j',
+                    7: 'k',
+                    8: 'l',
+                    'length': 9
+                },
+                2: {
+                    0: 'z',
+                    1: 'x',
+                    2: 'c',
+                    3: 'v',
+                    4: 'b',
+                    5: 'n',
+                    6: 'm',
+                    'length': 7
+                },
+                'length': 3
+            }
+            var hash = {
+                'q': 'qq.com',
+                'w': 'weibo.com',
+                'e': 'ele.me',
+                'r': 'renren.com',
+                't': 'tianya.com',
+                'y': 'youtube.com',
+                'u': 'uc.com',
+                'i': 'iqiyi.com',
+                'o': 'opera.com',
+                'p': undefined,
+                'a': 'alibaba.com',
+                's': 'souhu.com',
+                'z': 'zhihu.com'
+            }
+            //获取元素工具函数
+            function getFromLocalStorage(xxx) {
+                return JSON.parse(localStorage.getItem(xxx) || 'null');
+            }
+            //取出localStorage中的uuu对应的值
+            var hashInLocalStorage = getFromLocalStorage('uuu');
+            //读档
+            if (hashInLocalStorage) {
+                hash = hashInLocalStorage;
+            }
+            return {
+                'keys': keys,
+                'hash': hash
+            }
+        }
+        //创建元素函数
+        function create(tagName, attributes) {
+            var element = document.createElement(tagName);
+            for (var key in attributes) { //key为键值
+                element[key] = attributes[key];
+            }
+            return element;
+        }
+        //生成键盘函数
+        function generateKeyboard(keys, hash) {
+            //  遍历keys，生成kbd标签
+            for (var index = 0; index < keys['length']; index++) {
+                var div = create('div', {
+                    className: 'row'
+                });
+                for (var index2 = 0; index2 < keys[index].length; index2++) {
+                    var span = create('span', {
+                        className: 'text',
+                        textContent: keys[index][index2]
+                    });
+                    var button = create('button', {
+                        textContent: "编辑",
+                        id: keys[index][index2]
+                    });
+                    button.onclick = function (eve) {
+                        var x = prompt("请输入对应的网址");
+                        var button2 = eve.target;
+                        var img2 = button2.previousSibling;
+                        //更改前一个图片的src
+                        img2.src = 'https://www.' + x + '/favicon.ico';
+                        //图片加载失败时使用预选图片
+                        img2.onerror = function (e) {
+                            console.log("网站icon下载失败了");
+                            e.target.src = './clipboard.png';
+                        }
+                        if (x != null && x != undefined) {
+                            //hash变更,修改对应的图片src
+                            hash[eve.target.id] = x;
+                            //存放hash,存档
+                            localStorage.setItem('uuu', JSON.stringify(hash));
+                        }
+                    }
+                    if (hash[keys[index][index2]]) {
+                        var img = create('img');
+                        img.src = 'https://www.' + hash[keys[index][index2]] + '/favicon.ico';
+                    } else {
+                        var img = create('img', {
+                            src: './clipboard.png'
+                        });
+                    }
+                    //图片加载失败时使用预选图片
+                    img.onerror = function (e) {
+                        console.log("网站icon下载失败了");
+                        e.target.src = './clipboard.png';
+                    }
+                    var kbd = create('kbd', {
+                        className: 'key'
+                    });
+                    kbd.appendChild(span);
+                    kbd.appendChild(img);
+                    kbd.appendChild(button);
+                    div.appendChild(kbd);
+                }
+                mian.appendChild(div);
+            }
+        }
+
+        function listenToUser(hash) {
+            document.onkeypress = function (e) {
+                var key = e.key;
+                var website = hash[key];
+                // location.href = 'http://'+website;
+                if (website != undefined) {
+                    window.open('http://' + website, '_blank');
+                } else {
+                    alert('请输入对应的网址');
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
