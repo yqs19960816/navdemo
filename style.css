@@ -9,7 +9,7 @@ a {
 }
 
 body {
-    background: #DAD9DA url(./wall.jpg) no-repeat center center;
+    background: #DAD9DA url(images/wall.jpg) no-repeat center center;
     background-size: cover;
     height: 100vh;
 }
